@@ -20,375 +20,197 @@ void SetColor(int ForgC) {
  return;
 }
 
-typedef struct Items Items_t;
-struct Items
+// Structure Statut
+typedef struct Statut statut_t;
+struct Statut
 {
-    char* nom;
-    int prix;
-    int poids;
-    int quantite;
-    int level;
-    int durabilite;
+  int age;
+  char sexe[15];
+  char lieu[50];
+  char nationalite[30];
+  char religion[30];
+
 };
 
-typedef struct Inventaire Inventaire_t;
-struct Inventaire
+// Structure lieux
+typedef struct Ticket ticket_t;
+struct Ticket
 {
-    int inventaire;
-    int inventaireMax;
-    int poids;
-    int poidsMax;
-    int argent;
-    int level;
+  statut_t leStatut;
+  int intelligence;
+  char secteur[50];
+  int revenu;
+  int innocence;
+  int fidelite;
 };
 
+/* Degré d’intelligence (celui-ci est renouvelable, si souhaité, auprès de soi-disant spécialistes)
+Statut social (âge, célibataire/couple, sexe, lieu et type d’habitation, nationalité, religion)
+Secteur du travail (ce dernier se verra classer approfondissant encore plus les disparités)
+Revenu mensuelle (sera affiche sous sa forme NET)
+Degré d’innocence (le casier judiciaire et les actions de l’individu impacteront ce point)
+Année Fidélité (depuis combien de temps la personne a obtenu son premier Data Ticket) */
+
+ticket_t testTicket = {18, "Homme", "Liverpool", "Francais", "Ath\202e", 115, "Data Keeper", 12000, 1, 5};
+
+int affichageTicket (ticket_t testTicket) {
+	SetColor(2);
+	printf ("|Age          : %d\n", testTicket.leStatut.age);
+	printf ("|S\x88xe         : %s\n", testTicket.leStatut.sexe);
+	printf ("|Lieu         : %s\n", testTicket.leStatut.lieu);
+	printf ("|Nationalit\202  : %s\n", testTicket.leStatut.nationalite);
+	printf ("|Religion     : %s\n", testTicket.leStatut.religion);
+	printf ("|Int\202lligence : %d\n", testTicket.intelligence);
+	printf ("|Secteur      : %s\n", testTicket.secteur);
+	printf ("|Revenu       : %d\n", testTicket.revenu);
+	printf ("|Innocence    : %d\n", testTicket.innocence);
+	printf ("|Fid\202lit\202     : %d\n", testTicket.fidelite);
+	SetColor(15);
+	printf ("\n%s\n\n", "--------------------------------");
+};
+
+// Le #coffre toujours là
+int coffre;
+char coffreTexte[30];
+int tuto = 0;
+int jeu = 0;
 
 int main (){
 
-int jeu = 0;
-int visuelle = 0;
-int coffre;
-int choixQuantite;
-char nomcoffre[20];
-int nombreItem = 2;
 
-// les données du héros liés à son inventaire
-Inventaire_t herosInventaire ={0, 20, 0, 25, 150, 1};
+// NOM DU MONDE
+  printf("\n%s\n", "                            ______________________________");
+  printf("%s\n", "                           |                              |");
+  printf("%s\n", "                           |          DATA TICKET         |");
+  printf("%s\n\n", "                           |______________________________|");
 
-// Les items pour le commerce
-Items_t bouclier ={"Bouclier", 30, 4, 3, 1, 100};
-Items_t epee ={"Epee", 50, 3, 5, 1, 100};
-Items_t plastron ={"Plastron", 40, 5, 2, 1, 100};
-Items_t potiondeSoin ={"Potion de Soin", 30, 1, 15, 1, 100};
-Items_t potiondeRez ={"Potion de Resurrection", 200, 1, 5, 1, 100};
-Items_t monItem ={"Mon Item", 0, 0, 0, 0, 100};
-Items_t itemCoffre ={"Item Exemple", 0, 0, 0, 0, 100};
-
-// Pour le shop du commercant
-Items_t shop[6];
-shop[0] = bouclier;
-shop[1] = epee;
-shop[2] = plastron;
-shop[3] = potiondeSoin;
-shop[4] = potiondeRez;
-shop[5] = monItem;
-
-// Pour l'inventaire
-Items_t slot[20];
-slot[0] = bouclier;
-slot[0].prix = slot[0].prix/5;
-slot[1] = potiondeRez;
-slot[1].prix = slot[1].prix/5;
-slot[2] = itemCoffre;
-
-Inventaire_t inventaireVisuel[1];
-inventaireVisuel[0] = herosInventaire;
-
-// Permet de trier grâce à l'alphabet
-int i;
-int j;
-Items_t shopTemp[1];
-shopTemp[0] = shop[0];
-
-while (jeu == 0) {
-
-coffre = 0;
-
-// Affichage shop comemrcant
-SetColor(8);
-
-printf("\n%s\n", "                            _____________________________________________________________ ");
-printf("%s\n", "                           |                                                             |");
-printf("%s\n", "                           |                       SHOP DU COMMERCANT                    |");
-printf("%s\n\n", "                           |_____________________________________________________________|");
-
-printf("\n%s", "                _______________________________________________________________________________________\n");
-printf("%s", "               |                                                                                      |");
-printf("\n%s", "               |            ***********             ******       *******      **********     *******  |");
-printf("\n%s", "               |           *   ITEMS   *           * PRIX *     * POIDS *    * QUANTITE *   * LEVEL * |");
-printf("\n%s", "               |            ***********             ******       *******      **********     *******  |");
-printf("\n%s", "               |                                                                                      |");
-printf("\n""               |     %s                   |     %d      |     %d     |      x%d       |     %d     |", shop[0]);
-printf("\n""               |     %s                       |     %d      |     %d     |      x%d       |     %d     |", shop[1]);
-printf("\n""               |     %s                   |     %d      |     %d     |      x%d       |     %d     |", shop[2]);
-printf("\n""               |     %s             |     %d      |     %d     |      x%d      |     %d     |", shop[3]);
-printf("\n""               |     %s     |     %d     |     %d     |      x%d       |     %d     |", shop[4]);
-printf("\n""               |     %s                   |     %d       |     %d     |      x%d       |     %d     |\n", shop[5]);
-printf("%s\n", "               |                                                                                      |");
-printf("%s\n", "               |______________________________________________________________________________________|");
-
-
-SetColor(15);
-
-Sleep(2000);
-
-// affichage Inventaire Heros
-SetColor(3);
-
-printf("\n\n%s\n", "                            _____________________________________________________________ ");
-printf("%s\n", "                           |                                                             |");
-printf("%s\n", "                           |                        VOTRE INVENTAIRE                     |");
-printf("%s\n\n", "                           |_____________________________________________________________|");
-
-printf("\n%s", "      _____________________________________________________________________________________________________________________________\n");
-printf("\n%s", "              *************************          **************************          *************          ************");
-printf("\n" "             * ESPACE INVENTAIRE : %d/%d *       * POIDS INVENTAIRE : %d/%d  *        * ARGENT : %d *       * LEVEL : %d  *", inventaireVisuel[0]);
-printf("\n%s", "              *************************          **************************          *************          ************");
-printf("\n%s", "                                                                                                 ");
-printf("\n""     |   %s                  |   Vente : %d    |   Poids : %d   |   Quantite : x%d   |   Level : %d   |   Durabilite : %d/100   |", slot[0]);
-printf("\n""     |   %s    |   Vente : %d   |   Poids : %d   |   Quantite : x%d   |   Level : %d   |   Durabilite : %d/100   |", slot[1]);
-printf("\n""     |   %s    |   Vente : %d   |   Poids : %d   |   Quantite : x%d   |   Level : %d   |   Durabilite : %d/100   |\n", slot[2]);
-printf("%s\n", "                                                                               ");
-printf("%s\n\n", "      _____________________________________________________________________________________________________________________________");
-
-SetColor(15);
-
-// Choix de l'item à acheter ou à fabriquer
-Sleep(1000);
-printf("\n%s\n\n", "----------------------------------------------------");
-printf("%s\n", "Avant de choisir les items que vous souhaitez acheter, desirez-vous trier dans l'ordre les objets ? Il est important de vous notifiez que si vous effectuez ce tri, l'interface graphique sera moins lisible");
-printf("%s\n", "Tapez [0] pour garder l'interface actuelle ; Tapez [1] pour trier dans l'ordre alphabetique ; Tapez [2] pour trier dans l'ordre croissant des prix ; Tapez [3] pour trier dans l'ordre croissant des levels");
-printf("Votre choix : ");
-SetColor (3);
-scanf("%d", &visuelle);
-SetColor (15);
-
-if (visuelle == 0) {
-printf("%s\n", "vous avez decide de garder l'interface actuelle [MERCI]");
-} else if (visuelle == 1) {
-  for (i = 0; i < 6; i++) {
-    for (j=i+1 ; j < 6; j++) {
-      if (strcmp(shop[i].nom, shop[j].nom) > 0) {
-  shopTemp[0] = shop[i];
-  shop[i] = shop[j];
-  shop[j] = shopTemp[0];
-      }
-    }
+SetColor (8);
+  printf("\n%s", "Lancer la partie [0]");
+  printf("\n%s\n", "Options [1]");
+  printf("Votre choix : ");
+  SetColor (3);
+  scanf("%d", &coffre);
+  SetColor (8);
+  while (coffre != 0 & coffre != 1) {
+  printf("Votre choix : ");
+  SetColor (3);
+  scanf("%d", &coffre);
+  SetColor (8);
   }
-} else if (visuelle == 2) {
-  for (i = 0; i < 6; i++) {
-    for (j=i+1 ; j < 6; j++) {
-      if (shop[i].prix < shop[j].prix) {
-  shopTemp[0] = shop[i];
-  shop[i] = shop[j];
-  shop[j] = shopTemp[0];
-      }
-    }
+
+if (coffre == 1) {
+  printf("\n%s\n", "Souhaitez-vous inclure le tutoriel pour cette partie ? Ce dernier est aussi recommend\x82 pour bien comprendre l'histoire");
+  printf("\n%s\n", "Si oui entrer [0], si non entrer [1]");
+  printf("Votre choix : ");
+  SetColor (3);
+  scanf("%d", &coffre);
+  SetColor (8);
+  if (coffre == 0){
+  printf("\n%s\n", "Un tutoriel vous saura donc propos\x82 en debut de partie");
+  tuto = 0;
+  printf("\n%s\n", "Maintenant, pour lancer la partie, appuyer sur [0]");
+  printf("Votre choix : ");
+  SetColor (3);
+  scanf("%d", &coffre);
+  SetColor (8);
+  while (coffre != 0) {
+  printf("Votre choix : ");
+  SetColor (3);
+  scanf("%d", &coffre);
+  SetColor (8);
   }
-} else if (visuelle == 3) {
-  for (i = 0; i < 6; i++) {
-    for (j=i+1 ; j < 6; j++) {
-      if (shop[i].level, shop[j].level) {
-  shopTemp[0] = shop[i];
-  shop[i] = shop[j];
-  shop[j] = shopTemp[0];
-      }
-    }
+} else {
+  printf("\n%s\n", "Vous n'aurez pas de tutoriel pour cette partie, c'est not\x82");
+  tuto = 1;
+  printf("\n%s\n", "Maintenant, pour lancer la partie, appuyer sur [0]");
+  printf("Votre choix : ");
+  SetColor (3);
+  scanf("%d", &coffre);
+  SetColor (8);
+  while (coffre != 0) {
+  printf("Votre choix : ");
+  SetColor (3);
+  scanf("%d", &coffre);
+  SetColor (8);
   }
 }
-
-
-printf("\n\n%s\n\n", "----------------------------------------------------");
-SetColor(8);
-printf("%s\n", "Avez vous un items qui correspond a vos attentes ? Si oui entrer le numero de l'objet souhaite ci-dessous, si non, entrer [-1]");
-printf("\n" "[0 = %s] ", shop[0]); printf("[1 = %s] ", shop[1]); printf("[2 = %s] ", shop[2]); printf("[3 = %s] ", shop[3]); printf("[4 = %s] ", shop[4]); printf("[5 = %s]\n", shop[5]);
-printf("Item : ");
-SetColor (3);
-scanf("%d", &coffre);
-SetColor (15);
-
-// Si l'item n'est plus disponible dans le shop
-SetColor (4);
-if (coffre == 0 && shop[0].quantite == 0){
-  printf("\n%s\n", "L'item n'est plus disponible");
-} else if (coffre == 1 && shop[1].quantite == 0){
-  printf("\n%s\n", "L'item n'est plus disponible ");
-}  else if (coffre == 2 && shop[2].quantite == 0){
-  printf("\n%s\n", "L'item n'est plus disponible");
-}  else if (coffre == 3 && shop[3].quantite == 0){
-  printf("\n%s\n", "L'item n'est plus disponible");
-}  else if (coffre == 4 && shop[4].quantite == 0){
-  printf("\n%s\n", "L'item n'est plus disponible");
-}
-SetColor (15);
-
-// Si le joueur n'a plus d'argent
-SetColor (4);
-if (coffre == 0 && inventaireVisuel[0].argent < shop[0].prix){
-  printf("\n%s\n", "Vous n'avez pas assez d'argent pour acheter cet item");
-} else if (coffre == 1 && inventaireVisuel[0].argent < shop[1].prix){
-  printf("\n%s\n", "Vous n'avez pas assez d'argent pour acheter cet item");
-}  else if (coffre == 2 && inventaireVisuel[0].argent < shop[2].prix){
-  printf("\n%s\n", "Vous n'avez pas assez d'argent pour acheter cet item");
-}  else if (coffre == 3 && inventaireVisuel[0].argent < shop[3].prix){
-  printf("\n%s\n", "Vous n'avez pas assez d'argent pour acheter cet item");
-}  else if (coffre == 4 && inventaireVisuel[0].argent < shop[4].prix){
-  printf("\n%s\n", "Vous n'avez pas assez d'argent pour acheter cet item");
-}
-SetColor (15);
-
-// Si le joueur n'a plus de place dans son inventaire
-SetColor (4);
-if (coffre == 0 && inventaireVisuel[0].inventaire > inventaireVisuel[0].inventaireMax){
-  printf("\n%s\n", "Vous n'avez pas assez de place dans votre inventaire pour acheter cet item");
-} else if (coffre == 1 && inventaireVisuel[0].inventaire > inventaireVisuel[0].inventaireMax){
-  printf("\n%s\n", "Vous n'avez pas assez de place dans votre inventaire pour acheter cet item");
-}  else if (coffre == 2 && inventaireVisuel[0].inventaire > inventaireVisuel[0].inventaireMax){
-  printf("\n%s\n", "Vous n'avez pas assez de place dans votre inventaire pour acheter cet item");
-}  else if (coffre == 3 && inventaireVisuel[0].inventaire > inventaireVisuel[0].inventaireMax){
-  printf("\n%s\n", "Vous n'avez pas assez de place dans votre inventaire pour acheter cet item");
-}  else if (coffre == 4 && inventaireVisuel[0].inventaire > inventaireVisuel[0].inventaireMax){
-  printf("\n%s\n", "Vous n'avez pas assez de place dans votre inventaire pour acheter cet item");
-}
-SetColor (15);
-
-// Si le poids de l'inventaire est trop élevé
-SetColor (4);
-if (coffre == 0 && inventaireVisuel[0].poids + shop[0].poids > inventaireVisuel[0].poidsMax){
-  printf("\n%s\n", "Votre inventaire est trop lourd pour acheter cet item");
-} else if (coffre == 1 && inventaireVisuel[0].poids + shop[1].poids > inventaireVisuel[0].poidsMax){
-  printf("\n%s\n", "Votre inventaire est trop lourd pour acheter cet item");
-}  else if (coffre == 2 && inventaireVisuel[0].poids + shop[2].poids > inventaireVisuel[0].poidsMax){
-  printf("\n%s\n", "Votre inventaire est trop lourd pour acheter cet item");
-}  else if (coffre == 3 && inventaireVisuel[0].poids + shop[3].poids > inventaireVisuel[0].poidsMax){
-  printf("\n%s\n", "Votre inventaire est trop lourd pour acheter cet item");
-}  else if (coffre == 4 && inventaireVisuel[0].poids + shop[4].poids > inventaireVisuel[0].poidsMax){
-  printf("\n%s\n", "Votre inventaire est trop lourd pour acheter cet item");
-}
-SetColor (15);
-
-// CHOIX DES ITEMS ET LEURS QUANTITÉS
-// CHOIX DES ITEMS ET LEURS QUANTITÉS
-Sleep(2000);
-SetColor (8);
-if (coffre == 0 && shop[0].quantite > 0 && inventaireVisuel[0].argent > shop[0].prix) {
-  printf("\nCombien voulez vous acheter de %s ? \nNombre : ", shop[0].nom);
-SetColor (3);
-  scanf("%d", &coffre);
-SetColor (8);
-    if (coffre*shop[0].prix > inventaireVisuel[0].argent || inventaireVisuel[0].inventaire + coffre > inventaireVisuel[0].inventaireMax || inventaireVisuel[0].poids + shop[0].poids*coffre > inventaireVisuel[0].poidsMax || shop[0].quantite < coffre) {
-        SetColor (4);
-        printf("\nLa quantite demande est impossible ou vous n'avez pas assez d'argent/de place dans votre inventaire pour acheter autant de %ss\n", shop[0].nom);
-        SetColor (15);
-    } else {
-      printf("\nVous venez d'acheter %d %ss\n", coffre, shop[0].nom);
-      shop[0].quantite = shop[0].quantite - coffre;
-      inventaireVisuel[0].inventaire = inventaireVisuel[0].inventaire + coffre;
-      inventaireVisuel[0].argent = inventaireVisuel[0].argent - shop[0].prix*coffre;
-      inventaireVisuel[0].poids = inventaireVisuel[0].poids + shop[0].poids*coffre;
-      // Exemple de l'ajout d'un l'item dans l'inventaire
-      slot[nombreItem].nom = shop[0].nom; slot[nombreItem].prix = shop[0].prix*coffre/5 ; slot[nombreItem].poids = shop[0].poids*coffre ; slot[nombreItem].quantite = coffre ; slot[nombreItem].level = shop[0].level ;
-      ++nombreItem;
-    }
-
-} else if (coffre == 1 && shop[1].quantite > 0 && inventaireVisuel[0].argent > shop[1].prix) {
-  printf("\nCombien voulez vous acheter de %s ? \nNombre : ", shop[1].nom);
-SetColor (3);
-  scanf("%d", &coffre);
-SetColor (8);
-    if (coffre*shop[1].prix > inventaireVisuel[0].argent || inventaireVisuel[0].inventaire + coffre > inventaireVisuel[0].inventaireMax || inventaireVisuel[0].poids + shop[1].poids*coffre > inventaireVisuel[0].poidsMax || shop[1].quantite < coffre) {
-      SetColor (4);
-        printf("\nLa quantite demande est impossible ou vous n'avez pas assez d'argent/de place dans votre inventaire pour acheter autant de %ss\n", shop[1].nom);
-      SetColor (15);
-    } else {
-      printf("\nVous venez d'acheter %d %ss\n", coffre, shop[1].nom);
-      shop[1].quantite = shop[1].quantite - coffre;
-      inventaireVisuel[0].inventaire = inventaireVisuel[0].inventaire + coffre;
-      inventaireVisuel[0].argent = inventaireVisuel[0].argent - shop[1].prix*coffre;
-      inventaireVisuel[0].poids = inventaireVisuel[0].poids + shop[1].poids*coffre;
-    }
-
-} else if (coffre == 2 && shop[2].quantite > 0 && inventaireVisuel[0].argent > shop[2].prix) {
-  printf("\nCombien voulez vous acheter de %s ? \nNombre : ", shop[2].nom);
-SetColor (3);
-  scanf("%d", &coffre);
-SetColor (8);
-    if (coffre*shop[2].prix > inventaireVisuel[0].argent || inventaireVisuel[0].inventaire + coffre > inventaireVisuel[0].inventaireMax || inventaireVisuel[0].poids + shop[2].poids*coffre > inventaireVisuel[0].poidsMax || shop[2].quantite < coffre) {
-      SetColor (4);
-        printf("\nLa quantite demande est impossible ou vous n'avez pas assez d'argent/de place dans votre inventaire pour acheter autant de %ss\n", shop[2].nom);
-      SetColor (15);
-    } else {
-      printf("\nVous venez d'acheter %d %ss\n", coffre, shop[2].nom);
-      shop[2].quantite = shop[2].quantite - coffre;
-      inventaireVisuel[0].inventaire = inventaireVisuel[0].inventaire + coffre;
-      inventaireVisuel[0].argent = inventaireVisuel[0].argent - shop[2].prix*coffre;
-      inventaireVisuel[0].poids = inventaireVisuel[0].poids + shop[2].poids*coffre;
-    }
-
-} else if (coffre == 3 && shop[3].quantite > 0 && inventaireVisuel[0].argent > shop[3].prix) {
-  printf("\nCombien voulez vous acheter de %s ? \nNombre : ", shop[3].nom);
-SetColor (3);
-  scanf("%d", &coffre);
-SetColor (8);
-    if (coffre*shop[3].prix > inventaireVisuel[0].argent || inventaireVisuel[0].inventaire + coffre > inventaireVisuel[0].inventaireMax || inventaireVisuel[0].poids + shop[3].poids*coffre > inventaireVisuel[0].poidsMax || shop[3].quantite < coffre) {
-      SetColor (4);
-        printf("\nLa quantite demande est impossible ou vous n'avez pas assez d'argent/de place dans votre inventaire pour acheter autant de %ss\n", shop[3].nom);
-      SetColor (15);
-    } else {
-      printf("\nVous venez d'acheter %d %ss\n", coffre, shop[3].nom);
-      shop[3].quantite = shop[3].quantite - coffre;
-      inventaireVisuel[0].inventaire = inventaireVisuel[0].inventaire + coffre;
-      inventaireVisuel[0].argent = inventaireVisuel[0].argent - shop[3].prix*coffre;
-      inventaireVisuel[0].poids = inventaireVisuel[0].poids + shop[3].poids*coffre;
-    }
-
-} else if (coffre == 4 && shop[4].quantite > 0 && inventaireVisuel[0].argent > shop[4].prix) {
-  printf("\nCombien voulez vous acheter de %s ? \nNombre : ", shop[4].nom);
-SetColor (3);
-  scanf("%d", &coffre);
-SetColor (8);
-    if (coffre*shop[4].prix > inventaireVisuel[0].argent || inventaireVisuel[0].inventaire + coffre > inventaireVisuel[0].inventaireMax || inventaireVisuel[0].poids + shop[4].poids*coffre > inventaireVisuel[0].poidsMax || shop[4].quantite < coffre) {
-      SetColor (4);
-        printf("\nLa quantite demande est impossible ou vous n'avez pas assez d'argent/de place dans votre inventaire pour acheter autant de %ss\n", shop[4].nom);
-      SetColor (15);
-    } else {
-      printf("\nVous venez d'acheter %d %ss\n", coffre, shop[4].nom);
-      shop[4].quantite = shop[4].quantite - coffre;
-      inventaireVisuel[0].inventaire = inventaireVisuel[0].inventaire + coffre;
-      inventaireVisuel[0].argent = inventaireVisuel[0].argent - shop[4].prix*coffre;
-      inventaireVisuel[0].poids = inventaireVisuel[0].poids + shop[4].poids*coffre;
-    }
-
-// ITEM À FABRIQUER
-} else if (coffre == 5) {
-printf("\n%s\n", "Vous avez decide de creer un item pour l'implemanter dans le shop du commercant");
-  printf("%s\n", "Quel nom souhaitez-vous donnez a l'item ?");
-  printf("%s", "Item : ");
-SetColor (3);
-  scanf("%s", &nomcoffre);
-  monItem.nom = nomcoffre;
-SetColor (8);
-Sleep(1000);
-  printf("\n%s\n", "D'accord, c'est note ");
-  printf("%s", "Son prix : ");
-SetColor (3);
-  scanf("%d", &coffre);
-  monItem.prix = coffre;
-SetColor (8);
-Sleep(1000);
-  printf("\n%s\n", "D'accord, c'est note ");
-  printf("%s", "Et pour terminer, son poids : ");
-SetColor (3);
-  scanf("%d", &coffre);
-  monItem.poids = coffre;
-Sleep(1000);
-SetColor (8);
-  printf("\n%s\n", "Voici l'item qui sera ajoute au shop");
-  monItem.quantite = 1;
-  monItem.level = 1;
-  shop[5] = monItem;
-  printf("| %s |   Vente : %d   |   Poids : %d   |   Quantite : x%d   |   Level : %d   |", shop[5]);
-} else if (coffre == -1) {
-  printf("\n%s\n", "Merci de votre visite, au revoir");
-  jeu = 1;
 }
 
-Sleep(2000);
-SetColor (15);
+if (coffre == 0) {
+  printf("\n%s\n", "La partie va se lancer...");
+}
+
+Sleep (3000);
 system("cls");
+SetColor (15);
 
-}
+printf("\n%s\n", "                            ______________________________________");
+printf("%s\n", "                           |                                      |");
+printf("%s\n", "                           |       CHAPITRE 0 : DATA KEEPER       |");
+printf("%s\n\n", "                           |______________________________________|");
 
-SetColor(15);
+Sleep(1000);
+  SetColor (8);
+  printf("\n%s", "Vous \x88tes enfin arriv\x82 \x85 votre lieu de travail pour votre premiere journ\202e d'apprentissage.");
+Sleep(4000);
+  printf("\n%s", "Vous \x88tes extr\x8Amement stress\x82, et cela depuis hier soir, vous ayant fait passer l'une des pires nuits de votre vie.");
+Sleep(3000);
+  printf("\n[."); Sleep(1000); printf("."); Sleep(1000); printf(".]");
+Sleep(3000);
+  printf("\n%s", "30 minutes apr\x8As votre arriv\202e, dans ce qui pourrait s'apparenter \x85 une salle d'attente, personne n'est venu vous parler.");
+Sleep(4000);
+  printf("\n%s\n", "Et le manque de sommeil commence \x85 se faire terriblement ressentir, jusqu'\x85 ce que dernier vienne vous cueillir.");
+  SetColor (4);
+Sleep(4000);
+
+  printf("\n%s", "- Hey le bleubite, tu te reveilles ?.");
+Sleep(2000);
+  SetColor (3);
+  printf("\n[."); Sleep(1000); printf("."); Sleep(1000); printf(".]");
+Sleep(2000);
+  SetColor (4);
+  printf("\n%s", "- OH bouge toi, j'ai pas toute la journ\202e.");
+Sleep(2000);
+  SetColor (3);
+  printf("\n%s", "- Pardon, j'ai pas reussi \x85 dormir correctement cette nuit \x85 cause du stress.");
+Sleep(2500);
+  SetColor (4);
+  printf("\n%s\n", "- Je m'en fou, l\x8Ave toi et suis moi.");
+Sleep(2000);
+
+  SetColor (8);
+  printf("\n%s\n", "Vous le suivez jusqu'\x85 un guichet o\x97 un nombre important de documents y est entass\202s.");
+Sleep(4000);
+  SetColor (4);
+  printf("\n%s", "Bon, tu dois s\x96rement savoir tr\x8As peu de choses au sujet du m\202tier que tu va effectuer et c'est normal.");
+Sleep(4000);
+  printf("\n%s\n", "Au vu de ton profil, et donc de ton ticket, le syst\x8Ame \x85 d\202cid\202 de t'attribuer ce job.");
+Sleep(4000);
+printf("\n%s", "Petit rappel, au cas o\x97, le TICKET correspond aux donn\202es d'un individu et est inscrit dans un registre international, utilis\202 par de nombreux pays, dont le notre.");
+Sleep(6000);
+  printf("\n%s", "Sa dur\202e de validit\202 est de 12 mois, et se doit donc d'\x88tre renouveler avant sa date d'invalidit\202, sous peine de santions. ");
+Sleep(4000);
+  printf("\n%s\n", "Il est \202videmment obligatoire d'apporter des documents pour justifier les informations se trouvant sur le TICKET ou pour y apporter des modifications si n\202cessaire.");
+Sleep(5000);
+  printf("\n%s", "Et c'est l\x85 que notre m\202tier, celui de Data Keeper, rentre en jeu. Celui de s'assurer de la conformit\202 entre les dires de l'individu et les informations de ces documents.");
+Sleep(6000);
+  printf("\n%s\n", "Il est d'ailleurs obligatoire avant d'effectuer une modification ou un renouvellement de s'assurer que chaque donn\202es pr\202sentent sur le TICKET est un document officiel les confirmant.");
+Sleep(6000);
+  printf("\n%s", "Cependant, on est beaucoup plus requis pour un autre type de demande, qui pourrait s'apparenter \x85 celui de r\202ptionniste.");
+Sleep(4000);
+  printf("\n%s", "Notre job pour ce genre de requ\x88te est de s'assurer de la conformit\202 des attentes du client en fonction du TICKET pr\202sent\202.");
+Sleep(4500);
+  printf("\n%s\n", "Si on prend l'exemple d'une soir\202e priv\202e, l'h\x93te donnera des donn\202es \x85 respecter \x85 la lettre amenant \x85 la d\202cision de faire rentrer ou non l'individu t'ayant pr\202sent\202 son TICKET.");
+Sleep(6000);
+  printf("\n%s\n", "Bon rien de vaut mieux qu'un exemple concret pour chaque situation et puis, certes y'a beaucoup d'informations \x85 assimiler, mais t'as vraiment l'air compl\x8Atement paum\202...");
+  SetColor (4);
+Sleep(5000);
+
+
+
+  SetColor (3);
+  printf("\n\n%s\n", "Exemple Ticket Affichage du cul : ");
+  affichageTicket (testTicket);
+
 return 0;
 }
