@@ -24,6 +24,7 @@ void SetColor(int ForgC) {
 typedef struct Statut statut_t;
 struct Statut
 {
+  char prenom[30];
   int age;
   char sexe[15];
   char lieu[50];
@@ -51,10 +52,9 @@ Revenu mensuelle (sera affiche sous sa forme NET)
 Degré d’innocence (le casier judiciaire et les actions de l’individu impacteront ce point)
 Année Fidélité (depuis combien de temps la personne a obtenu son premier Data Ticket) */
 
-ticket_t testTicket = {18, "Homme", "Liverpool", "Francais", "Ath\202e", 115, "Data Keeper", 12000, 1, 5};
-
 int affichageTicket (ticket_t testTicket) {
 	SetColor(2);
+	printf ("|Pr\202nom       : %s\n", testTicket.leStatut.prenom);
 	printf ("|Age          : %d\n", testTicket.leStatut.age);
 	printf ("|S\x88xe         : %s\n", testTicket.leStatut.sexe);
 	printf ("|Lieu         : %s\n", testTicket.leStatut.lieu);
@@ -68,6 +68,10 @@ int affichageTicket (ticket_t testTicket) {
 	SetColor(15);
 	printf ("\n%s\n\n", "--------------------------------");
 };
+  statut_t testStatut = {"Georges", 18, "Homme", "Liverpool", "Francais", "Ath\202e"};
+  ticket_t testTicket = {"Georges", 18, "Homme", "Liverpool", "Francais", "Ath\202e", 115, "Data Keeper", 12000, 1, 5};
+
+
 
 // Le #coffre toujours là
 int coffre;
@@ -77,12 +81,16 @@ int jeu = 0;
 
 int main (){
 
+char prenomList[2][100] = {"Benoit", "Suzette"};
 
 // NOM DU MONDE
   printf("\n%s\n", "                            ______________________________");
   printf("%s\n", "                           |                              |");
   printf("%s\n", "                           |          DATA TICKET         |");
   printf("%s\n\n", "                           |______________________________|");
+
+/* strcpy(testTicket.leStatut.prenom, prenomList[1]);
+  affichageTicket (testTicket); */
 
 SetColor (8);
   printf("\n%s", "Lancer la partie [0]");
@@ -192,7 +200,7 @@ Sleep(6000);
 Sleep(4000);
   printf("\n%s\n", "Il est \202videmment obligatoire d'apporter des documents pour justifier les informations se trouvant sur le TICKET ou pour y apporter des modifications si n\202cessaire.");
 Sleep(5000);
-  printf("\n%s", "Et c'est l\x85 que notre m\202tier, celui de Data Keeper, rentre en jeu. Celui de s'assurer de la conformit\202 entre les dires de l'individu et les informations de ces documents.");
+  printf("\n%s", "Et c'est l\x85 que notre m\202tier, celui de Data Keeper, rentre en jeu. Celui de s'assurer de la conformit\202 entre les dires de l'individu et les informations pr\202sentes sur ces documents.");
 Sleep(6000);
   printf("\n%s\n", "Il est d'ailleurs obligatoire avant d'effectuer une modification ou un renouvellement de s'assurer que chaque donn\202es pr\202sentent sur le TICKET est un document officiel les confirmant.");
 Sleep(6000);
