@@ -81,7 +81,9 @@ int jeu = 0;
 
 int main (){
 
-char prenomList[2][100] = {"Benoit", "Suzette"};
+
+char prenomList[31][100] = {"/0", "Eddy", "Charlotte", "Lilian", "Luc", "Paul", "Lucas", "Hugo", "Sabine", "Mathieu", "Alexia", "Enora", "Axel", "Guillaume", "Alice",
+"Paul", "In\x8As", "Th\202o", "Marie", "Zo\202", "Ath\202nais", "Ugo", "K\202vin", "Coline", "Joseph", "Margaux", "M\202lody", "Antoine", "No\202mie", "Pauline", "Tom"};
 
 // NOM DU MONDE
   printf("\n%s\n", "                            ______________________________");
@@ -89,7 +91,8 @@ char prenomList[2][100] = {"Benoit", "Suzette"};
   printf("%s\n", "                           |          DATA TICKET         |");
   printf("%s\n\n", "                           |______________________________|");
 
-/* strcpy(testTicket.leStatut.prenom, prenomList[1]);
+/*  coffre = (rand() % (30 - 1 + 1)) + 1;
+  strcpy(testTicket.leStatut.prenom, prenomList[coffre]);
   affichageTicket (testTicket); */
 
 SetColor (8);
