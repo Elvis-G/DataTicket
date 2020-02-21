@@ -288,7 +288,7 @@ printf("%s\n\n", "                           |__________________________________
 
 Sleep(1000);
 SetColor (8);
-  printf("\n%s", "Vous \x88tes enfin arriv\x82 \x85 votre lieu de travail pour votre premiere journ\202e d'apprentissage. [25 F\202vrier 2045]");
+  printf("\n%s", "[25 F\202vrier 2045] Vous \x88tes enfin arriv\x82 \x85 votre lieu de travail pour votre premiere journ\202e d'apprentissage.");
 Sleep(4000);
   printf("\n%s", "Vous \x88tes extr\x8Amement stress\x82, et cela depuis hier soir, vous ayant fait passer l'une des pires nuits de votre vie.");
 Sleep(3000);
@@ -380,7 +380,7 @@ SetColor (12);
   printf("\n%s\n", "- Alors de 1, ce genre de cas arrivera plus souvent que tu ne le penses.");
 Sleep(3000);
   printf("%s\n", "- Et de 2, je te forme pas et ils te payeront pas pour imposer ta vision des choses dans notre m\202tier.");
-Sleep(3000);
+Sleep(4000);
   printf("%s\n", "- Si tu veux pas respecter les directives de ton employeur le temps venu, c'est toi qui d\202cide, mais soit pr\210t \x85 en subir les cons\202quences.");
 Sleep(5000);
   printf("%s\n", "- Une fois vir\202 tu sais bien qu'il est impossible de retrouver du travail, du moins un travail te permettant de subvenir correctement \x85 tes besoins. Donc ferme l\x85 et on commence.");
@@ -538,7 +538,7 @@ SetColor (7);
   printf("\n%s", "- Bonjour, au vu de votre accoutrement, vous devez certainement \210tre le Data Keeper que j'ai employ\202.");
 Sleep(4000);
 SetColor (3);
-  printf("\n%s", "- En effet, c'est bien moi.");
+  printf("\n%s", "- En effet, c'est moi.");
 Sleep(2000);
 SetColor (7);
   printf("\n%s", "- Parfait, vous irez vous installez au devant de cette propri\202t\202 juste apr\212s notre conversation, puisque c'est dans cette derni\212re que va se d\202rouler la soir\212e d'ici 15 minutes.");
@@ -571,6 +571,7 @@ if (compteur == 56) {
   compteur == -1;
 }
 
+// PREMIER JEU
 while (compteur+4 != time_->tm_min){
 system("cls");
 SetColor(15);
