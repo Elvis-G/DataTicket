@@ -508,6 +508,7 @@ Sleep(3000);
 system("cls");
 }
 
+
 // DÉBUT CHAPITRE 1
 SetColor (15);
 printf("\n%s\n", "                            ______________________________________");
@@ -560,25 +561,26 @@ Sleep(10000);
 time(&rawtime);
 time_ = localtime(&rawtime);
 
-compteur = time_->tm_min;
+ compteur = time_->tm_min;
+
 if (compteur == 56) {
-  compteur == -4;
+  compteur = -4;
 } else if (compteur == 57) {
-  compteur == -3;
+  compteur = -3;
 } else if (compteur == 58) {
-  compteur == -2;
+  compteur = -2;
 } else if (compteur == 59) {
-  compteur == -1;
+  compteur = -1;
 }
 
 // PREMIER JEU
-while (compteur+4 != time_->tm_min){
+while (compteur+1 != time_->tm_min){
 system("cls");
 SetColor(15);
   printf ("\n%s\n", "--------------------------------");
   printf("\n%s\n", "        TRAVAIL EN COURS ");
   printf("~ Ticket Effectu\202s : %d \n", ticketFait);
-  printf("~ Fautes : %d \n", faute);
+  printf("~ Fautes : %d \n %d %d", faute, compteur, time_->tm_min);
   printf ("\n%s\n\n", "--------------------------------");
 
 SetColor (3);
@@ -601,28 +603,24 @@ SetColor (3);
 if (coffre == 0 && ticket.revenu >= 80000 && ticket.innocence <= 2) {
 SetColor (7);
   ticketFait++;
-  compteur++;
   printf("\n%s\n", "- Merci, bonne soir\202e.");
 Sleep(2000);
 } else if (coffre == 0) {
 SetColor (7);
   ticketFait++;
   faute++;
-  compteur++;
   printf("\n%s\n", "- Merci beaucoup, merci, passez une bonne soir\202e.");
 Sleep(2000);
 }
 if (coffre == 1 && ticket.innocence > 2 || coffre == 1 && ticket.revenu < 80000) {
 SetColor (7);
   ticketFait++;
-  compteur++;
   printf("\n%s\n", "- Vous pourriez au moins faire quelques exceptions...");
 Sleep(2000);
 } else if (coffre == 1) {
 SetColor (7);
   ticketFait++;
   faute++;
-  compteur++;
   printf("\n%s\n", "- Comment \207a !? Allez, encore quelqu'un incapable de faire correctement son travail.");
 Sleep(2000);
 }
@@ -634,10 +632,10 @@ SetColor (8);
   printf("\n%s\n", "La soir\202 touche \x85 sa fin et il est l'heure pour vous d'envoyer votre rapport au r\202seau.");
 Sleep(3000);
 
-  printf("\n%s\n", "Le syst\212me vous notifie imm\202diatement de la r\202ception de votre rapport et recevez directement votre d\226 journalier.");
+  printf("\n%s\n", "Le syst\212me vous notifie imm\202diatement de la r\202ception de votre rapport et vous recevez directement votre d\226 journalier.");
 Sleep(4000);
-  printf("\n%s\n", "Avec une mention indiquant que si vous avez commis des fautes ou si vous faites l'objet de plaintes, de possibles sanctions seront envisag\202s.");
-Sleep(6000);
+  printf("\n%s\n", "Ce dernier est accompagn\202 d'un texte indiquant que si vous avez commis des fautes ou si vous faites l'objet de plaintes, de possibles sanctions seront envisag\202s.");
+Sleep(7000);
   printf("\n%s\n", "Sur ces \202crits plus que rassurants, vous prenez la route pour rentrer chez-vous.");
 
 
