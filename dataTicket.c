@@ -191,6 +191,7 @@ ticketBuild_t generationTicket(ticketBuild_t ticket, int coffre) {
 // Le #coffre toujours là
 int coffre;
 int coffreDialogue;
+int coffreErreur;
 int tuto = 0;
 int jeu = 0;
 int points = 0;
@@ -606,6 +607,7 @@ SetColor (3);
 if (coffre == 0 && ticket.revenu >= 80000 && ticket.innocence <= 2) {
 SetColor (7);
   ticketFait++;
+  // GENERE BOITE DE DIALOGUE INDIVIDU
     coffreDialogue = (rand() % (8 - 1 + 1)) + 1;
     if (coffreDialogue == 1) {
       printf("\n%s\n", "- Merci, bonne soir\202e.");
@@ -628,9 +630,17 @@ SetColor (7);
   }
 Sleep(2000);
 } else if (coffre == 0) {
-SetColor (7);
+SetColor (15);
   ticketFait++;
-  faute++;
+  // PROBA QUE L'ERREUR SOIT PRIS EN COMPTE 80%
+  coffreErreur = (rand() % (10 - 1 + 1)) + 1;
+  if (coffreErreur >= 3){
+    faute++;
+  } else {
+      printf("\n%s\n", "Il semblerait que personne n'est remarqu\202 votre erreur.");
+  }
+  // GENERE BOITE DE DIALOGUE INDIVIDU
+SetColor (7);
     coffreDialogue = (rand() % (5 - 1 + 1)) + 1;
     if (coffreDialogue == 1) {
       printf("\n%s\n", "- Merci beaucoup, merci, passez une bonne soir\202e.");
@@ -649,6 +659,7 @@ Sleep(2000);
 if (coffre == 1 && ticket.innocence > 2 || coffre == 1 && ticket.revenu < 80000) {
 SetColor (7);
   ticketFait++;
+  // GENERE BOITE DE DIALOGUE INDIVIDU
     coffreDialogue = (rand() % (6 - 1 + 1)) + 1;
     if (coffreDialogue == 1) {
       printf("\n%s\n", "- Vous pourriez au moins faire quelques exceptions...");
@@ -665,9 +676,17 @@ SetColor (7);
   }
 Sleep(2000);
 } else if (coffre == 1) {
-SetColor (7);
-  ticketFait++;
-  faute++;
+  SetColor (15);
+    ticketFait++;
+    // PROBA QUE L'ERREUR SOIT PRIS EN COMPTE 80%
+    coffreErreur = (rand() % (10 - 1 + 1)) + 1;
+    if (coffreErreur >= 3){
+      faute++;
+    } else {
+        printf("\n%s\n", "Il semblerait que personne n'est remarqu\202 votre erreur.");
+    }
+    // GENERE BOITE DE DIALOGUE INDIVIDU
+  SetColor (7);
     coffreDialogue = (rand() % (6 - 1 + 1)) + 1;
     if (coffreDialogue == 1) {
       printf("\n%s\n", "- Comment \207a !? Allez, encore quelqu'un incapable de faire correctement son travail.");
