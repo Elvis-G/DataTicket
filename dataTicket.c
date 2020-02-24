@@ -190,6 +190,7 @@ ticketBuild_t generationTicket(ticketBuild_t ticket, int coffre) {
 
 // Le #coffre toujours là
 int coffre;
+int coffreDialogue;
 int tuto = 0;
 int jeu = 0;
 int points = 0;
@@ -198,6 +199,8 @@ int compteur = 0;
 int faute = 0;
 int ticketFait = 0;
 int tm_sec;
+
+int argent = 125;
 
 int main (){
 
@@ -574,7 +577,7 @@ if (compteur == 56) {
 }
 
 // PREMIER JEU
-while (compteur+1 != time_->tm_min){
+while (compteur+4 != time_->tm_min){
 system("cls");
 SetColor(15);
   printf ("\n%s\n", "--------------------------------");
@@ -603,42 +606,218 @@ SetColor (3);
 if (coffre == 0 && ticket.revenu >= 80000 && ticket.innocence <= 2) {
 SetColor (7);
   ticketFait++;
-  printf("\n%s\n", "- Merci, bonne soir\202e.");
+    coffreDialogue = (rand() % (8 - 1 + 1)) + 1;
+    if (coffreDialogue == 1) {
+      printf("\n%s\n", "- Merci, bonne soir\202e.");
+  } else if (coffreDialogue == 2) {
+      printf("\n%s\n", "- C'est pas trop t\223t, si vous alliez un peu plus vite, il n'y aurait pas autant d'attentes...");
+    Sleep(1000);
+  } else if (coffreDialogue == 3) {
+      printf("\n%s\n", "- Vous en avez mis du temps mais merci.");
+  } else if (coffreDialogue == 4) {
+      printf("\n%s\n", "*Reprend son ticket sans le moindre remerciement*.");
+  } else if (coffreDialogue == 5) {
+      printf("\n%s\n", "- Merci Data Keeper.");
+  } else if (coffreDialogue == 6) {
+      printf("\n%s\n", "- J'esp\212 que vous n'avez pas \202t\202 impressionn\202 par mes revenus haha.");
+  } else if (coffreDialogue == 7) {
+      printf("\n%s\n", "- Vous devez vous sentir priviligiez de pouvoir ne serait-ce que de parler avec des individus de notre rang.");
+    Sleep(1000);
+  } else if (coffreDialogue == 8) {
+      printf("\n%s\n", "- Merci passez une bonne soir\202e.");
+  }
 Sleep(2000);
 } else if (coffre == 0) {
 SetColor (7);
   ticketFait++;
   faute++;
-  printf("\n%s\n", "- Merci beaucoup, merci, passez une bonne soir\202e.");
+    coffreDialogue = (rand() % (5 - 1 + 1)) + 1;
+    if (coffreDialogue == 1) {
+      printf("\n%s\n", "- Merci beaucoup, merci, passez une bonne soir\202e.");
+  } else if (coffreDialogue == 2) {
+      printf("\n%s\n", "- J'aurais jamais pens\202 \210tre accept\202.");
+  } else if (coffreDialogue == 3) {
+      printf("\n%s\n", "- Merci monsieur le Data Keeper, un grand merci.");
+  } else if (coffreDialogue == 4) {
+      printf("\n%s\n", "*Vous lance un regard inquiet avant de reprendre son ticket et d'aller \x85 la soir\202e*.");
+    Sleep(1000);
+  } else if (coffreDialogue == 5) {
+      printf("\n%s\n", "- Je pensais que c'\202tait r\202serv\202 \x85 une certaine classe, comme quoi.");
+  }
 Sleep(2000);
 }
 if (coffre == 1 && ticket.innocence > 2 || coffre == 1 && ticket.revenu < 80000) {
 SetColor (7);
   ticketFait++;
-  printf("\n%s\n", "- Vous pourriez au moins faire quelques exceptions...");
+    coffreDialogue = (rand() % (6 - 1 + 1)) + 1;
+    if (coffreDialogue == 1) {
+      printf("\n%s\n", "- Vous pourriez au moins faire quelques exceptions...");
+  } else if (coffreDialogue == 2) {
+      printf("\n%s\n", "- Vous \210tes comme ces types, un l\212che bottes.");
+  } else if (coffreDialogue == 3) {
+      printf("\n%s\n", "- Tout \207a car je ne r\202pond pas \x85 leurs putains de normes.");
+  } else if (coffreDialogue == 4) {
+      printf("\n%s\n", "- Allez vous faire foutre.");
+  } else if (coffreDialogue == 5) {
+      printf("\n%s\n", "- D'accord, merci quand m\210me.");
+  } else if (coffreDialogue == 6) {
+      printf("\n%s\n", "- J'aurais quand m\210me essayez...");
+  }
 Sleep(2000);
 } else if (coffre == 1) {
 SetColor (7);
   ticketFait++;
   faute++;
-  printf("\n%s\n", "- Comment \207a !? Allez, encore quelqu'un incapable de faire correctement son travail.");
+    coffreDialogue = (rand() % (6 - 1 + 1)) + 1;
+    if (coffreDialogue == 1) {
+      printf("\n%s\n", "- Comment \207a !? Allez, encore quelqu'un incapable de faire correctement son travail.");
+      Sleep(1000);
+  } else if (coffreDialogue == 2) {
+      printf("\n%s\n", "- J'\202tais pourtant s\226r de pouvoir y participer...");
+  } else if (coffreDialogue == 3) {
+      printf("\n%s\n", "- Je ne voulais pas vraiment y participer dans tout les cas.");
+  } else if (coffreDialogue == 4) {
+      printf("\n%s\n", "- Foutaise.");
+  } else if (coffreDialogue == 5) {
+      printf("\n%s\n", "- *Arrache le Data Ticket de vos mains et pars*.");
+  } else if (coffreDialogue == 6) {
+      printf("\n%s\n", "- Peu de personnes peuvent me r\202pondre par le n\202gatif, soyez en heureux");
+  }
 Sleep(2000);
 }
 time(&rawtime);
 time_ = localtime(&rawtime);
 }
+
+
 system("cls");
 SetColor (8);
-  printf("\n%s\n", "La soir\202 touche \x85 sa fin et il est l'heure pour vous d'envoyer votre rapport au r\202seau.");
-Sleep(3000);
-
+  printf("\n%s\n", "La soir\202e touche \x85 sa fin et il est l'heure pour vous d'envoyer votre rapport au r\202seau.");
+Sleep(4000);
   printf("\n%s\n", "Le syst\212me vous notifie imm\202diatement de la r\202ception de votre rapport et vous recevez directement votre d\226 journalier.");
 Sleep(4000);
-  printf("\n%s\n", "Ce dernier est accompagn\202 d'un texte indiquant que si vous avez commis des fautes ou si vous faites l'objet de plaintes, de possibles sanctions seront envisag\202s.");
+  printf("%s\n", "Ce dernier est accompagn\202 d'un texte indiquant que si vous avez commis des fautes ou si vous faites l'objet de plaintes, de possibles sanctions seront envisag\202s.");
 Sleep(7000);
-  printf("\n%s\n", "Sur ces \202crits plus que rassurants, vous prenez la route pour rentrer chez-vous.");
+  printf("%s\n", "Sur ces \202crits plus que rassurants, vous prenez la route pour rentrer chez-vous.");
 
+  SetColor(15);
+    printf ("\n%s\n", "--------------------------------");
+    printf("\n%s\n", "        SALAIRE ");
+    printf("~ Salaire Avant versement : %d \n", argent);
+    argent = argent+(ticketFait*5-faute*10);
+    ticketFait = 0; faute=0;
+    printf("~ Salaire apr\212s versement : %d \n", argent);
+    printf ("\n%s\n\n", "--------------------------------");
 
+Sleep(2000);
+SetColor (8);
+  printf("\n%s\n", "Vous arrivez dans votre appartement, ouvrez la porte mais au moment de d\202poser vos affaires dans votre salon, un individu se tient au millieu de ce dernier.");
+Sleep(7000);
+SetColor (5);
+  printf("\n%s\n", "- Bonjour Data Keeper, asseyez-vous s'il vous pla\x8Ct et n'essayez pas de jouer au h\202ros.");
+Sleep(4000);
+SetColor (8);
+  printf("\n%s\n", "Loin de vous l'id\202e de ne pas l'\202couter, notamment \x85 la vu de l'arme \x85 feu dans sa main droite.");
+Sleep(4000);
+SetColor (5);
+  printf("\n%s\n", "- N'ayez crainte, nous ne voulons vous faire aucun mal, tout ce que nous souhaitons c'est un partenariat.");
+Sleep(4000);
+SetColor (3);
+  printf("\n%s\n", "- Attendez comment \207a un partenariat, et puis qui \210tes-vous ?.");
+Sleep(4000);
+SetColor (5);
+  printf("\n%s\n", "- Disons que nous sommes une organisation priv\202e, et en ce qui concerne cette collaboration, c'est vos services qui nous int\202resse.");
+Sleep(6000);
+SetColor (3);
+  printf("\n%s\n", "- Quand vous faites r\202f\202rences \x85 mes services, c'est en rapport avec mon travail de Data Keeper ?.");
+Sleep(4000);
+SetColor (5);
+  printf("\n%s\n", "- Tout \x85 fait, mais laissez moi donc vous expliquez pourquoi nous vous avons approchez.");
+Sleep(3000);
+SetColor (8);
+  printf("%s\n", "Il se dirige vers votre cuisine, attrape de quoi boire, avant de retourner s'asseoir en face de vous.");
+Sleep(4000);
+SetColor (5);
+  printf("\n%s\n", "- Je vais aller droit au but, nous avons pour objectif de renverser le syst\212me actuel. Les disparit\202s ne font que progresser ces dernir\212s ann\202es.");
+Sleep(7000);
+  printf("%s\n", "- Et l'un des m\202tiers mettant en application ces in\202galit\202s est celui de Data Keeper. Bien que notre soci\202t\202 \202volue, et qu'il faut s'adapter \x85 notre \202poque, il est parfois bon de remettre en cause la direction prise par ses dirigeants.");
+Sleep(9000);
+  printf("%s\n", "- Malheureusement, il est plus que difficile d'amener les actes aux paroles. Le gouvernement est plus qu'install\202 et seul une \202lite peut y acc\202der, renforcant un sentiment d'injustice.");
+Sleep(7000);
+  printf("%s\n", "- Par cons\202quent, tout les m\202tiers ayant un tant soit peu d'impact sur notre \202tat est automatiquement donn\202e \x85 des individus issu d'un milieu d\202j\x85 corrompu.");
+Sleep(6000);
+  printf("\n%s\n", "- Mais il y a un travail qui ne r\202pond \x85 cette derni\212re caract\202ristique. Celui de Data Keeper.");
+Sleep(4000);
+  printf("%s\n", "- Vous avez la capacit\202, en plus de controler les entr\202es et sorties de lieux ou d'\202v\212nements, de pouvoir modifier les Data Ticket. Ce qui est aujourd'hui, la banque de donn\202es de notre \220tat. ");
+Sleep(7000);
+  printf("%s\n", "- C'est pourquoi, avec votre aide, nous aurions enfin la possibilit\202 d'infiltrer ce r\202seau gangr\202n\202 qu'est notre gouvernement. ");
+Sleep(5000);
+SetColor (8);
+  printf("\n%s\n", "Apr\212s cette explication effectu\202 \x85 2H du matin par celui s'\202tant introduit ill\202galement chez vous, vous effectuez une grande expiration avant de continuer la conversation. ");
+Sleep(6000);
+SetColor (3);
+  printf("\n%s\n", "- Et je suppose que vous \210tes venu \x85 moi car je suis un nouveau Data Keeper ?");
+Sleep(3000);
+SetColor (5);
+  printf("\n%s\n", "- En effet, nous esp\202rions que vous ne seriez pas totalement aveugl\202 par le syst\212me.");
+Sleep(4000);
+SetColor (3);
+  printf("\n%s\n", "- Admettons que j'accepte de collaborer avec vous, qu'est ce que j'y gagne autre le soi-disant fait d'effectuer une bonne cause.");
+Sleep(4000);
+SetColor (5);
+  printf("\n%s\n", "- Vous aurez chaque jour une rentr\202e d'argent suppl\202mentaire, au black pour \202viter tout soup\207on, en fonction de votre implication dans le projet.");
+Sleep(5000);
+  printf("%s\n", "- Lorsqu'un de nos membres viendra vous voir ou fera appel \x85 vos services, votre capacit\202 \x85 r\202pondre \x85 ses attentes d\202finira ces revenus.");
+Sleep(5000);
+  printf("%s\n", "- D'autres avantages pourront vous \210tre fourni compte tenu des risques que vous prendrez, vous apprendrez le contenu de ces derniers en temps voulu.");
+Sleep(5000);
+SetColor (8);
+  printf("\n%s\n", "Dans tout les cas, m\210me si la cause qu'il d\202fendait \202tait mauvaise, il faudrait mieux accepter leur demande, sous peine d'\210tre disposer au vu des informations qu'il vient de vous r\202v\202ler.");
+Sleep(8000);
+SetColor (3);
+  printf("\n%s\n", "- Vous savez quoi, vous avez raison, \x85 quoi bon vivre dans un tel pays si ce n'est que pour simplement engendrer de l'argent pour y survivre.");
+Sleep(5000);
+SetColor (5);
+  printf("\n%s\n", "- Avant tout, je tiens \x85 m'excuser d'\210tre entrer par effraction chez-vous, mais je me devais au plus vite \202changer avec vous \x85 propos de ce que nousvenons de discuter.");
+Sleep(6000);
+  printf("%s\n", "- Je suis heureux que nous ayant pu convenir \x85 un accord et j'esp\212re que votre implication engendra un changement dans notre syst\212me.");
+Sleep(5000);
+  printf("%s\n", "- Voici une avance pour vous remercier de rejoindre notre cause et des futurs \202changes que nous effectuerons.");
+Sleep(4000);
+
+SetColor(15);
+    printf ("\n%s\n", "--------------------------------");
+    printf("\n%s\n", "        SALAIRE ");
+    printf("~ Salaire Avant versement : %d \n", argent);
+      argent = argent + 75;
+    printf("~ Salaire apr\212 versement : %d \n", argent);
+    printf ("\n%s\n\n", "--------------------------------");
+
+SetColor (3);
+  printf("%s\n", "- Est-ce que je peux savoir comment vous vous appelez avant que partiez ?");
+Sleep(3000);
+SetColor (5);
+  printf("\n%s\n", "- Je m'appelle Charlie et je serais celui qui fera office d'interm\202diaire antre vous et l'organisation. Si vous avez la moindre question contactez-moi \x85 l'aide de ce bracelet num\202rique. Au revoir.");
+Sleep(7000);
+SetColor (8);
+  printf("\n%s\n", "Sur ces paroles, il quitta votre lieu... ");
+Sleep(3000);
+SetColor (3);
+  printf("\n%s\n", "- Pouaaah... C'\202quoi \207a. Bon je vais peut-\210tre aller dormir, enfin du moins essayer. Avec tout ce que j'ai \x85 l'esprit c'est pas gagner...");
+Sleep(10000);
+
+SetColor (15);
+  printf ("\n%s\n", "--------------------------------");
+  printf("\n%s\n", "  FIN CHAPITRE 1 : VOISINNAGE ");
+  printf ("\n%s\n\n", "--------------------------------");
+Sleep(3000);
+
+system("cls");
+
+SetColor (15);
+  printf ("\n%s\n", "--------------------------------");
+  printf("\n%s\n", "FIN DU PROGRAMME C // LA SUITE POUR BIENTOT");
+  printf ("\n%s\n\n", "--------------------------------");
 
 return 0;
 }
