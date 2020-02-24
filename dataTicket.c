@@ -629,9 +629,18 @@ Sleep(2000);
 time(&rawtime);
 time_ = localtime(&rawtime);
 }
+system("cls");
+SetColor (8);
+  printf("\n%s\n", "La soir\202 touche \x85 sa fin et il est l'heure pour vous d'envoyer votre rapport au r\202seau.");
+Sleep(3000);
 
-SetColor (15);
-  printf("\n%s\n", "Temps \220coul\202.");
+  printf("\n%s\n", "Le syst\212me vous notifie imm\202diatement de la r\202ception de votre rapport et recevez directement votre d\226 journalier.");
+Sleep(4000);
+  printf("\n%s\n", "Avec une mention indiquant que si vous avez commis des fautes ou si vous faites l'objet de plaintes, de possibles sanctions seront envisag\202s.");
+Sleep(6000);
+  printf("\n%s\n", "Sur ces \202crits plus que rassurants, vous prenez la route pour rentrer chez-vous.");
+
+
 
 return 0;
 }
